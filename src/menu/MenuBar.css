@@ -1,0 +1,17 @@
+.MenuBar {
+    display: flex;
+    height: 100px;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.MenuItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 0.2rem solid black;
+    text-align: center;
+    font-size: 0.7em;
+    padding: 20px;
+}
