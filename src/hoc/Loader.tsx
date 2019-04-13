@@ -5,7 +5,7 @@ export type HasLoading = {
     isLoading?: boolean;
 }
 
-const Loader: FunctionComponent<{}> = (props) => {
+const Loader: FunctionComponent<{}> = () => {
     return (
         <div className="App">
             <img src={logo} className="App-logo" alt="logo" />
@@ -15,12 +15,6 @@ const Loader: FunctionComponent<{}> = (props) => {
 };
 
 export function withLoadingC<P extends object>(Component: React.ComponentType<P>) {
-    // class WithLoading extends React.Component<P & HasLoading> {
-    //     render() {
-    //       const { isLoading, ...props } = this.props as HasLoading;
-    //       return isLoading ? <Loader /> : <Component {...props} />;
-    //     }
-    // }
     const origRender = Component.prototype.render;
     Component.prototype.render = function() {
         if (this.state.isLoading) {

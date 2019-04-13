@@ -1,0 +1,13 @@
+{
+    "app.title": "YAS-Shop",
+
+    "item.type.motherboard": "Motherboard",
+    "item.type.processor": "Processor",
+    "item.type.videocard": "Videocard",
+    "item.type.monitor": "Monitor",
+    "item.type.notebook": "Notebook",
+    "item.type.television": "Television",
+    "item.type.console": "Console",
+    "item.type.ssd": "SSD",
+    "item.type.other": "Other"
+}

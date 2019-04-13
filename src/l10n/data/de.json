@@ -1,0 +1,13 @@
+{
+    "app.title": "YAG-Geschäft",
+
+    "item.type.motherboard": "Hauptplatine",
+    "item.type.processor": "Prozessor",
+    "item.type.videocard": "Grafikkarte",
+    "item.type.monitor": "Monitor",
+    "item.type.notebook": "Notizbuch",
+    "item.type.television": "Fernsehen",
+    "item.type.console": "Konsole",
+    "item.type.ssd": "SSD",
+    "item.type.other": "Andere"
+}
