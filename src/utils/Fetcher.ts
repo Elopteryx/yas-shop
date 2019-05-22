@@ -1,9 +1,9 @@
 import Mock from './Mock';
 
 const Fetcher = {
-    async GET(url: string) {
+    async GET<T extends object | string>(url: string): Promise<T> {
         if (true) {
-            return Mock.get(url);
+            return Mock.get(url) as Promise<T>;
         }
         const response = await fetch(url, {
             method: "GET",
@@ -18,7 +18,7 @@ const Fetcher = {
         });
         return response.json();
     },
-    async POST(url: string, body: object) {
+    async POST<T>(url: string, body: object): Promise<T> {
         const response = await fetch(url, {
             method: "POST",
             mode: "cors",

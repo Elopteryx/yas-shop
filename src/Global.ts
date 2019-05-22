@@ -3,7 +3,7 @@ let state = {
         name: 'Anonymous'
     },
     version: '1.0.0',
-    language: 'de',
+    language: 'en',
 };
 
 const Global = {
