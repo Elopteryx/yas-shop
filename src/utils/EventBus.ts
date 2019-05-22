@@ -1,4 +1,4 @@
-export type Subscriber = (event: Symbol, ...args: any[]) => void;
+export type Subscriber = (event: Symbol, ...args: readonly any[]) => void;
 export type UnSubscriber = () => void;
 
 const subscriptions: Map<Symbol, Subscriber[]> = new Map();
@@ -23,7 +23,7 @@ const EventBus = {
         const subscribers = subscriptions.get(event);
         return subscribers && subscribers.length > 0;
     },
-    publish(event: Symbol, ...args: any[]) {
+    publish(event: Symbol, ...args: readonly any[]) {
         const subscribers = subscriptions.get(event);
         if (!subscribers) {
             return;
