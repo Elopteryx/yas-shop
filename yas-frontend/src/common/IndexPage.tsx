@@ -3,7 +3,7 @@ import MenuBar from '../menu/MenuBar';
 
 type IndexPageProps = {};
 
-const IndexPage: React.FunctionComponent<IndexPageProps> = (props) => {
+const IndexPage: React.FunctionComponent<IndexPageProps> = () => {
     return (
         <div>
             <MenuBar/>

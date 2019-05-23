@@ -26,7 +26,7 @@ export function withLoadingC<P extends object>(Component: React.ComponentType<P>
     return Component;
 }
 
-export function withLoadingF<T extends HasLoading>(func: FunctionComponent<T>) {
+export function withLoading<T extends HasLoading>(func: FunctionComponent<T>) {
     return (props: T & {children?: ReactNode}) => {
         if (props.isLoading) {
             return <Loader/>;

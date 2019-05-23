@@ -1,13 +1,10 @@
-import Mock from './Mock';
+import Delay from "./Delay";
 
 const Fetcher = {
-    async GET<T extends object | string>(url: string): Promise<T> {
-        if (true) {
-            return Mock.get(url) as Promise<T>;
-        }
-        const response = await fetch(url, {
+    GET<T extends object | string>(url: string): Promise<T> {
+        return Promise.all([fetch(url, {
             method: "GET",
-            mode: "cors",
+            mode: "no-cors",
             cache: "no-cache",
             credentials: "same-origin",
             headers: {
@@ -15,13 +12,12 @@ const Fetcher = {
             },
             redirect: "follow",
             referrer: "no-referrer",
-        });
-        return response.json();
+        }), Delay.by(500, undefined)]).then(([response]) => response.json());
     },
-    async POST<T>(url: string, body: object): Promise<T> {
-        const response = await fetch(url, {
+    POST<T>(url: string, body: object): Promise<T> {
+        return Promise.all([fetch(url, {
             method: "POST",
-            mode: "cors",
+            mode: "no-cors",
             cache: "no-cache",
             credentials: "same-origin",
             headers: {
@@ -30,9 +26,8 @@ const Fetcher = {
             redirect: "follow",
             referrer: "no-referrer",
             body: JSON.stringify(body),
-        });
-        return response.json();
+        }), Delay.by(500, undefined)]).then(([response]) => response.json());
     }
-}
+};
 
 export default Fetcher;

@@ -1,25 +1,31 @@
 import React, { PureComponent } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
 import Clock from './common/Clock';
 import UserInfo from './common/UserInfo';
 import VersionDisplay from './common/VersionDisplay';
 import {withLoadingC, HasLoading} from './hoc/Loader';
-import Global from './Global';
-import MenuBar from './menu/MenuBar';
 import IndexPage from './common/IndexPage';
 import ItemPage from './common/ItemPage';
 import LocalizationContext from './LocalizationContext';
 import Localized from './l10n/Localized';
+import Fetcher from "./utils/Fetcher";
+import {User} from "./common/User";
+import {Version} from "./common/Version";
+import {Language} from "./common/Language";
+import BalanceDisplay from "./common/BalanceDisplay";
 
-type AppProps = {}
-type AppState = {
-  user: {
-    name: string;
-  };
-  version: string;
-  language: string;
-}
+type AppProps = {};
+type AppState =
+  {
+    isLoading: true,
+  } |
+  {
+    isLoading: false,
+    user: User;
+    version: Version;
+    language: Language;
+};
 
 class App extends PureComponent<AppProps, AppState & HasLoading> {
 
@@ -28,16 +34,24 @@ class App extends PureComponent<AppProps, AppState & HasLoading> {
 
     this.state = {
       isLoading: true,
-      user: Global.user(),
-      version: Global.version(),
-      language: Global.language(),
     };
-    setTimeout(() => {
+  }
+
+  componentDidMount(): void {
+    Promise.all([
+      Fetcher.GET<User>('app/v1/user/current'),
+      Fetcher.GET<Version>('app/v1/version')
+    ]).then(([user, version]) => {
+      this.setState({isLoading: false, user, version, language: user.language});
+    }).catch(() => {
       this.setState({isLoading: false});
-    }, 1000);
+    });
   }
 
   render() {
+    if (this.state.isLoading) {
+      return;
+    }
     const {user, version, language} = this.state;
     return (
       <LocalizationContext.Provider value={language}>
@@ -50,17 +64,18 @@ class App extends PureComponent<AppProps, AppState & HasLoading> {
               <Clock/>
               <UserInfo user={user}/>
               <VersionDisplay version={version}/>
-              </header>
-              <Route path="/" exact component={() => <IndexPage/>} />
-              <Route path="/items/motherboard" component={() => <ItemPage/>} />
-              <Route path="/items/processor" component={() => <ItemPage/>} />
-              <Route path="/items/videocard" component={() => <ItemPage/>} />
-              <Route path="/items/monitor" component={() => <ItemPage/>} />
-              <Route path="/items/notebook" component={() => <ItemPage/>} />
-              <Route path="/items/television" component={() => <ItemPage/>} />
-              <Route path="/items/console" component={() => <ItemPage/>} />
-              <Route path="/items/ssd" component={() => <ItemPage/>} />
-              <Route path="/items/other" component={() => <ItemPage/>} />
+              <BalanceDisplay user={user}/>
+            </header>
+            <Route path="/" exact component={() => <IndexPage/>} />
+            <Route path="/items/motherboard" component={() => <ItemPage/>} />
+            <Route path="/items/processor" component={() => <ItemPage/>} />
+            <Route path="/items/videocard" component={() => <ItemPage/>} />
+            <Route path="/items/monitor" component={() => <ItemPage/>} />
+            <Route path="/items/notebook" component={() => <ItemPage/>} />
+            <Route path="/items/television" component={() => <ItemPage/>} />
+            <Route path="/items/console" component={() => <ItemPage/>} />
+            <Route path="/items/ssd" component={() => <ItemPage/>} />
+            <Route path="/items/other" component={() => <ItemPage/>} />
           </div>
         </Router>
       </LocalizationContext.Provider>
