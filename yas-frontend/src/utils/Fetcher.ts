@@ -2,7 +2,7 @@ import Delay from "./Delay";
 import Timeout from "./Timeout";
 
 const Fetcher = {
-    GET<T extends object | string>(url: string): Promise<T> {
+    GET<T>(url: string): Promise<T> {
         return Promise.race(
             [Promise.all([fetch(url, {
                 method: "GET",
