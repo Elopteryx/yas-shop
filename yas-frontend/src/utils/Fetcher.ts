@@ -15,7 +15,7 @@ const Fetcher = {
                 redirect: "follow",
                 referrer: "no-referrer",
             }), Delay.by(500, undefined)]).then(([response]) => response.json()),
-                Timeout.in(20000)]);
+                Timeout.in(20000)]) as Promise<T>;
     },
     POST<T>(url: string, body: object): Promise<T> {
         return Promise.race(
@@ -31,7 +31,7 @@ const Fetcher = {
                 referrer: "no-referrer",
                 body: JSON.stringify(body),
             }), Delay.by(500, undefined)]).then(([response]) => response.json()),
-                Timeout.in(20000)]);
+                Timeout.in(20000)]) as Promise<T>;
     }
 };
 

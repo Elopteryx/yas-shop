@@ -8,7 +8,7 @@ import {withLoadingC, HasLoading} from './hoc/Loader';
 import IndexPage from './common/IndexPage';
 import ItemPage from './common/ItemPage';
 import LocalizationContext from './LocalizationContext';
-import Localized from './l10n/Localized';
+import LocalizedText from './l10n/LocalizedText';
 import Fetcher from "./utils/Fetcher";
 import {User} from "./common/User";
 import {Version} from "./common/Version";
@@ -58,13 +58,17 @@ class App extends PureComponent<AppProps, AppState & HasLoading> {
         <Router>
           <div className="App">
             <header className="App-header">
-              <p>
-                <Localized l10nKey="app.title"/>
-              </p>
-              <Clock/>
-              <UserInfo user={user}/>
-              <VersionDisplay version={version}/>
-              <BalanceDisplay user={user}/>
+              <div className="App-header-left">
+                <p>
+                  <LocalizedText l10nKey="app.title"/>
+                </p>
+              </div>
+              <div className="App-header-right">
+                <Clock/>
+                <UserInfo user={user}/>
+                <VersionDisplay version={version}/>
+                <BalanceDisplay user={user}/>
+              </div>
             </header>
             <Route path="/" exact component={() => <IndexPage/>} />
             <Route path="/items/motherboard" component={() => <ItemPage/>} />
