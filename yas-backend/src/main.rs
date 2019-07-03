@@ -4,46 +4,19 @@
 #[macro_use] extern crate rocket_contrib;
 #[macro_use] extern crate serde_derive;
 
-use rocket_contrib::json::{Json, JsonValue};
+mod error;
+mod user;
+mod version;
 
-#[derive(Serialize, Deserialize)]
-struct User {
-    name: String,
-    balance: u32,
-    language: String,
-}
-
-#[get("/user/current")]
-fn user_current() -> Json<User> {
-    Json(User{
-        name: String::from("Anonymous"),
-        balance: 1200,
-        language: String::from("en"),
-    })
-}
-
-#[get("/version")]
-fn version() -> JsonValue {
-    json!({
-        "value": "1.0.0",
-        "major": 1,
-        "minor": 0,
-        "patch": 0,
-    })
-}
-
-#[catch(404)]
-fn not_found() -> JsonValue {
-    json!({
-        "status": "error",
-        "reason": "Resource was not found."
-    })
-}
+use crate::error::static_rocket_catch_info_for_not_found;
+use crate::error::static_rocket_catch_info_for_internal_error;
+use crate::user::static_rocket_route_info_for_user_current;
+use crate::version::static_rocket_route_info_for_version;
 
 fn rocket() -> rocket::Rocket {
     rocket::ignite()
         .mount("/app/v1", routes![user_current, version])
-        .register(catchers![not_found])
+        .register(catchers![not_found, internal_error])
 }
 
 fn main() {
