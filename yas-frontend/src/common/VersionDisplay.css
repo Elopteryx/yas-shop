@@ -1,7 +1,4 @@
 .VersionDisplay {
-    position: absolute;
-    top: 20px;
-    right: 0;
-    padding: 30px;
+    padding: 20px;
     font-size: 0.6em;
 }

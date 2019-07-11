@@ -1,3 +1,3 @@
-pub fn sort(&mut nums: Vec<i32>) {
+pub fn sort(_arr: &mut [isize]) {
     panic!("Not implemented yet!")
 }

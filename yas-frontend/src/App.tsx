@@ -39,8 +39,8 @@ class App extends PureComponent<AppProps, AppState & HasLoading> {
 
   componentDidMount(): void {
     Promise.all([
-      Fetcher.GET<User>('app/v1/user/current'),
-      Fetcher.GET<Version>('app/v1/version')
+      Fetcher.GET<User>('/app/v1/user/current'),
+      Fetcher.GET<Version>('/app/v1/version')
     ]).then(([user, version]) => {
       this.setState({isLoading: false, user, version, language: user.language});
     }).catch(() => {
@@ -64,10 +64,10 @@ class App extends PureComponent<AppProps, AppState & HasLoading> {
                 </p>
               </div>
               <div className="App-header-right">
-                <Clock/>
                 <UserInfo user={user}/>
                 <VersionDisplay version={version}/>
                 <BalanceDisplay user={user}/>
+                <Clock/>
               </div>
             </header>
             <Route path="/" exact component={() => <IndexPage/>} />

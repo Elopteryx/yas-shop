@@ -11,7 +11,7 @@ const Clock: React.FunctionComponent<{}> = () => {
     });
     return (
         <div className="Clock">
-            <p>{time}</p>
+            {time}
         </div>
     );
 };

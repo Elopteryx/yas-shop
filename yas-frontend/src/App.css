@@ -1,8 +1,13 @@
+body {
+  overflow: hidden;
+}
+
 .App {
   text-align: center;
   background-color: #282c34;
   min-height: 100vh;
   color: white;
+  overflow: hidden;
 }
 
 .App-logo {
@@ -11,7 +16,7 @@
 }
 
 .App-header {
-  min-height: 25vh;
+  min-height: 20vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -24,6 +29,7 @@
 
 .App-header-right {
   width: 30vw;
+  text-align: right;
 }
 
 .App-link {
@@ -45,4 +51,14 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.Page {
+  height: 80vh;
+}
+
+.Content {
+  font-size: 3rem;
+  height: calc(80vh - 100px);
+  line-height: calc(80vh - 100px);
 }

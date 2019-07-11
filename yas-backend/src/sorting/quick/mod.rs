@@ -1,47 +1,40 @@
-pub fn sort(&mut nums: Vec<i32>) {
-    sort_in_range(nums, 0, nums.len());
+pub fn sort(array: &mut [isize]) {
+    sort_in_range(array, 0, array.len() - 1);
 }
 
-fn sort_in_range(&mut nums: Vec<i32>, low: i32, high: i32) {
-    if low < high {
-        let pivot = partition(vec, low, high);
-        sort_in_range(&mut nums, low, pivot - 1);
-        sort_in_range(&mut nums, pivot + 1, high);
+fn sort_in_range(array: &mut [isize], first: usize, last: usize) {
+    if first < last {
+        let midpoint = partition(array, first, last);
+        sort_in_range(array, first, midpoint - 1);
+        sort_in_range(array, midpoint + 1, last);
     }
 }
 
-fn partition(&mut nums: Vec<i32>, low: i32, high: i32) -> i32 {
-    let pivot = nums[high];
-    let mut index = low;
-    for (pos, i) in nums.iter().enumerate() {
-        if nums[i] < pivot {
-            swap(nums, index, pos);
-            index = index + 1;
+fn partition(array: &mut [isize], first: usize, last: usize) -> usize {
+    let pivot = array[last];
+
+    let mut i = first;
+    let mut j = first;
+
+    while j < last {
+        if array[j] < pivot {
+            array.swap(i, j);
+            i += 1;
         }
+        j += 1;
     }
-    swap(nums, index, high);
-    index
-}
-
-fn swap(&mut nums: Vec<i32>, a: i32, b: i32) {
-    let temp = nums[a];
-    nums[a] = nums[b];
-    nums[b] = temp;
+    array.swap(i, last);
+    i
 }
 
 #[cfg(test)]
-mod test {
-    use quick::sort;
+pub mod test {
+    use super::sort;
 
     #[test]
     fn basics() {
-
-        let mut nums = vec![7, 2, 4, 6];
-
-        sort(nums);
-
-        for i in nums.iter() {
-            println!("{}", i);
-        }
+        let mut nums = [7, 2, 4, 6];
+        sort(&mut nums);
+        assert_eq!(nums, [2, 4, 6, 7]);
     }
 }

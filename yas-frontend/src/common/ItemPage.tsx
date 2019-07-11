@@ -7,9 +7,11 @@ type ItemPageProps = {} & RouteComponentProps<{}>;
 const ItemPage: React.FunctionComponent<ItemPageProps> = (props) => {
     const {match} = props;
     return (
-        <div>
+        <div className="Page">
             <MenuBar/>
-            <div>This is the {match!.path.replace('/items/', '')} page.</div>
+            <div className="Content">
+                This is the {match!.path.replace('/items/', '')} page.
+            </div>
         </div>
     );
 };
