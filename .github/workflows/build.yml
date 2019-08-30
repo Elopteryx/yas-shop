@@ -1,0 +1,33 @@
+name: Yas-Shop CI
+
+on: [push]
+
+jobs:
+  build-frontend:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: npm install, test, and build
+        run: |
+          npm install
+          npm run test
+          npm run build
+        env:
+          CI: true
+
+  build-backend:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build
+        run: cargo build --verbose
+      - name: Run tests
+        run: cargo test --verbose
