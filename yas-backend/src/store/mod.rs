@@ -8,10 +8,16 @@ pub struct Item {
     category: Vec<String>,
 }
 
-#[get("/item/<id>")]
-pub fn item_by_id() -> Json<Item> {
+#[get("/store/items")]
+pub fn item_all() -> Json<Vec<Item>> {
+    let items: Vec<Item> = vec![];
+    Json(items)
+}
+
+#[get("/store/items/<id>")]
+pub fn item_by_id(id: u64) -> Json<Item> {
     Json(Item {
-        id: 1,
+        id,
         name: String::from("New SSD"),
         price: 55,
         category: vec![String::from("SSD")]
