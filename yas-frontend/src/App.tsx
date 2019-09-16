@@ -7,13 +7,12 @@ import VersionDisplay from './common/VersionDisplay';
 import {HasLoading, withLoading} from './hoc/Loader';
 import IndexPage from './common/IndexPage';
 import ItemPage from './common/ItemPage';
-import LocalizationContext from './LocalizationContext';
+import LocalizationContext, {Language} from './LocalizationContext';
 import LocalizedText from './l10n/LocalizedText';
 import Fetcher from "./utils/Fetcher";
-import {User} from "./common/User";
-import {Version} from "./common/Version";
-import {Language} from "./common/Language";
 import BalanceDisplay from "./common/BalanceDisplay";
+import UserContext, {User} from "./UserContext";
+import VersionContext, {Version} from "./VersionContext";
 
 type AppState =
   {
@@ -26,7 +25,7 @@ type AppState =
     language: Language;
 };
 
-const App: React.FunctionComponent<AppState & HasLoading> = (props) => {
+const App: React.FunctionComponent<AppState & HasLoading> = () => {
   const [state, setState] = useState({isLoading: true} as AppState);
   useEffect(() => {
     Promise.all([
@@ -43,35 +42,39 @@ const App: React.FunctionComponent<AppState & HasLoading> = (props) => {
   }
   const {user, version, language} = state;
   return (
-      <LocalizationContext.Provider value={language}>
-        <Router>
-          <div className="App">
-            <header className="App-header">
-              <div className="App-header-left">
-                <p>
-                  <LocalizedText l10nKey="app.title"/>
-                </p>
+      <VersionContext.Provider value={version}>
+        <UserContext.Provider value={user}>
+          <LocalizationContext.Provider value={language}>
+            <Router>
+              <div className="App">
+                <header className="App-header">
+                  <div className="App-header-left">
+                    <p>
+                      <LocalizedText l10nKey="app.title"/>
+                    </p>
+                  </div>
+                  <div className="App-header-right">
+                    <UserInfo/>
+                    <VersionDisplay/>
+                    <BalanceDisplay/>
+                    <Clock/>
+                  </div>
+                </header>
+                <Route path="/" exact component={() => <IndexPage/>}/>
+                <Route path="/items/motherboard" component={() => <ItemPage/>}/>
+                <Route path="/items/processor" component={() => <ItemPage/>}/>
+                <Route path="/items/videocard" component={() => <ItemPage/>}/>
+                <Route path="/items/monitor" component={() => <ItemPage/>}/>
+                <Route path="/items/notebook" component={() => <ItemPage/>}/>
+                <Route path="/items/television" component={() => <ItemPage/>}/>
+                <Route path="/items/console" component={() => <ItemPage/>}/>
+                <Route path="/items/ssd" component={() => <ItemPage/>}/>
+                <Route path="/items/other" component={() => <ItemPage/>}/>
               </div>
-              <div className="App-header-right">
-                <UserInfo user={user}/>
-                <VersionDisplay version={version}/>
-                <BalanceDisplay user={user}/>
-                <Clock/>
-              </div>
-            </header>
-            <Route path="/" exact component={() => <IndexPage/>} />
-            <Route path="/items/motherboard" component={() => <ItemPage/>} />
-            <Route path="/items/processor" component={() => <ItemPage/>} />
-            <Route path="/items/videocard" component={() => <ItemPage/>} />
-            <Route path="/items/monitor" component={() => <ItemPage/>} />
-            <Route path="/items/notebook" component={() => <ItemPage/>} />
-            <Route path="/items/television" component={() => <ItemPage/>} />
-            <Route path="/items/console" component={() => <ItemPage/>} />
-            <Route path="/items/ssd" component={() => <ItemPage/>} />
-            <Route path="/items/other" component={() => <ItemPage/>} />
-          </div>
-        </Router>
-      </LocalizationContext.Provider>
+            </Router>
+          </LocalizationContext.Provider>
+        </UserContext.Provider>
+      </VersionContext.Provider>
   );
 };
 

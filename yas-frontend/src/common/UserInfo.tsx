@@ -1,14 +1,12 @@
 import * as React from 'react';
 import './UserInfo.css';
+import {useContext} from "react";
+import UserContext from "../UserContext";
 
-type UserInfoProps = {
-    user: {
-        name: string;
-    }
-}
+type UserInfoProps = {};
 
-const UserInfo: React.FunctionComponent<UserInfoProps> = (props) => {
-    const {user} = props;
+const UserInfo: React.FunctionComponent<UserInfoProps> = () => {
+    const user = useContext(UserContext);
 
     return (
         <div className="UserInfo">Logged in: {user.name}</div>

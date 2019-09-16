@@ -1,13 +1,12 @@
 import * as React from 'react';
 import './VersionDisplay.css';
-import {Version} from "./Version";
+import VersionContext from "../VersionContext";
+import {useContext} from "react";
 
-type VersionDisplayProps = {
-    version: Version;
-}
+type VersionDisplayProps = {};
 
-const VersionDisplay: React.FunctionComponent<VersionDisplayProps> = (props) => {
-    const {version} = props;
+const VersionDisplay: React.FunctionComponent<VersionDisplayProps> = () => {
+    const version = useContext(VersionContext);
 
     return (
         <div className="VersionDisplay">Version: {version.value}</div>

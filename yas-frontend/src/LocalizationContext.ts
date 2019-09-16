@@ -1,6 +1,9 @@
 import React from 'react';
-import {Language} from "./common/Language";
 
-const LocalizationContext = React.createContext('en' as Language);
+export type Language =
+    | 'en'
+    | 'de';
+
+const LocalizationContext = React.createContext<Language>('en');
 
 export default LocalizationContext;
