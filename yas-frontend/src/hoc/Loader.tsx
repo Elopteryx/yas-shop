@@ -14,19 +14,7 @@ const Loader: FunctionComponent<{}> = () => {
     )
 };
 
-export function withLoadingC<P extends object>(Component: React.ComponentType<P>) {
-    const origRender = Component.prototype.render;
-    Component.prototype.render = function() {
-        if (this.state.isLoading) {
-            return <Loader/>;
-        } else {
-            return origRender.call(this);
-        }
-    };
-    return Component;
-}
-
-export function withLoading<T extends HasLoading>(func: FunctionComponent<T>) {
+export function withLoading<T extends HasLoading>(func: FunctionComponent<T>): FunctionComponent<any> {
     return (props: T & {children?: ReactNode}) => {
         if (props.isLoading) {
             return <Loader/>;

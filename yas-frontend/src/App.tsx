@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, {useEffect, useState} from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
 import Clock from './common/Clock';
 import UserInfo from './common/UserInfo';
 import VersionDisplay from './common/VersionDisplay';
-import {withLoadingC, HasLoading} from './hoc/Loader';
+import {HasLoading, withLoading} from './hoc/Loader';
 import IndexPage from './common/IndexPage';
 import ItemPage from './common/ItemPage';
 import LocalizationContext from './LocalizationContext';
@@ -15,7 +15,6 @@ import {Version} from "./common/Version";
 import {Language} from "./common/Language";
 import BalanceDisplay from "./common/BalanceDisplay";
 
-type AppProps = {};
 type AppState =
   {
     isLoading: true,
@@ -27,33 +26,23 @@ type AppState =
     language: Language;
 };
 
-class App extends PureComponent<AppProps, AppState & HasLoading> {
-
-  constructor(props: AppProps) {
-    super(props);
-
-    this.state = {
-      isLoading: true,
-    };
-  }
-
-  componentDidMount(): void {
+const App: React.FunctionComponent<AppState & HasLoading> = (props) => {
+  const [state, setState] = useState({isLoading: true} as AppState);
+  useEffect(() => {
     Promise.all([
       Fetcher.GET<User>('/app/v1/user/current'),
       Fetcher.GET<Version>('/app/v1/version')
     ]).then(([user, version]) => {
-      this.setState({isLoading: false, user, version, language: user.language});
+      setState({isLoading: false, user, version, language: user.language});
     }).catch(() => {
-      this.setState({isLoading: false});
+      setState({isLoading: true});
     });
+  }, []);
+  if (state.isLoading) {
+    return null;
   }
-
-  render() {
-    if (this.state.isLoading) {
-      return;
-    }
-    const {user, version, language} = this.state;
-    return (
+  const {user, version, language} = state;
+  return (
       <LocalizationContext.Provider value={language}>
         <Router>
           <div className="App">
@@ -83,8 +72,7 @@ class App extends PureComponent<AppProps, AppState & HasLoading> {
           </div>
         </Router>
       </LocalizationContext.Provider>
-    );
-  }
-}
+  );
+};
 
-export default withLoadingC(App);
+export default withLoading(App);
