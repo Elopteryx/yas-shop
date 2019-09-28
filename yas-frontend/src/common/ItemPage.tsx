@@ -1,19 +1,19 @@
 import * as React from 'react';
-import { withRouter, RouteComponentProps } from 'react-router';
+import {useLocation} from 'react-router';
 import MenuBar from '../menu/MenuBar';
 
-type ItemPageProps = {} & RouteComponentProps<{}>;
+type ItemPageProps = {};
 
-const ItemPage: React.FunctionComponent<ItemPageProps> = (props) => {
-    const {match} = props;
+const ItemPage: React.FunctionComponent<ItemPageProps> = () => {
+    const location = useLocation();
     return (
         <div className="Page">
             <MenuBar/>
             <div className="Content">
-                This is the {match!.path.replace('/items/', '')} page.
+                This is the {location.pathname.replace('/items/', '')} page.
             </div>
         </div>
     );
 };
 
-export default withRouter(React.memo(ItemPage));
+export default React.memo(ItemPage);

@@ -49,9 +49,7 @@ const App: React.FunctionComponent<AppState & HasLoading> = () => {
               <div className="App">
                 <header className="App-header">
                   <div className="App-header-left">
-                    <p>
-                      <LocalizedText l10nKey="app.title"/>
-                    </p>
+                    <LocalizedText l10nKey="app.title"/>
                   </div>
                   <div className="App-header-right">
                     <UserInfo/>
@@ -60,16 +58,16 @@ const App: React.FunctionComponent<AppState & HasLoading> = () => {
                     <Clock/>
                   </div>
                 </header>
-                <Route path="/" exact component={() => <IndexPage/>}/>
-                <Route path="/items/motherboard" component={() => <ItemPage/>}/>
-                <Route path="/items/processor" component={() => <ItemPage/>}/>
-                <Route path="/items/videocard" component={() => <ItemPage/>}/>
-                <Route path="/items/monitor" component={() => <ItemPage/>}/>
-                <Route path="/items/notebook" component={() => <ItemPage/>}/>
-                <Route path="/items/television" component={() => <ItemPage/>}/>
-                <Route path="/items/console" component={() => <ItemPage/>}/>
-                <Route path="/items/ssd" component={() => <ItemPage/>}/>
-                <Route path="/items/other" component={() => <ItemPage/>}/>
+                <Route path="/" exact><IndexPage/></Route>
+                <Route path="/items/motherboard"><ItemPage/></Route>
+                <Route path="/items/processor"><ItemPage/></Route>
+                <Route path="/items/videocard"><ItemPage/></Route>
+                <Route path="/items/monitor"><ItemPage/></Route>
+                <Route path="/items/notebook"><ItemPage/></Route>
+                <Route path="/items/television"><ItemPage/></Route>
+                <Route path="/items/console"><ItemPage/></Route>
+                <Route path="/items/ssd"><ItemPage/></Route>
+                <Route path="/items/other"><ItemPage/></Route>
               </div>
             </Router>
           </LocalizationContext.Provider>
