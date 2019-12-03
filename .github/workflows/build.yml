@@ -13,9 +13,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - name: Subdir
-        run: cd yas-frontend
       - name: npm install, test, and build
+        working-directory: ./yas-frontend
         run: |
           npm install
           npm run test
@@ -29,9 +28,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Subdir
-        run: cd yas-backend
       - name: Build
+        working-directory: ./yas-backend
         run: cargo build --verbose
       - name: Run tests
+        working-directory: ./yas-backend
         run: cargo test --verbose
