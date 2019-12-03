@@ -1,3 +1,7 @@
+extern crate rand;
+
+use rand::Rng;
+
 use rocket_contrib::json::Json;
 
 #[derive(Serialize, Deserialize)]
@@ -9,9 +13,10 @@ pub struct User {
 
 #[get("/user/current")]
 pub fn user_current() -> Json<User> {
+    let mut rng = rand::thread_rng();
     Json(User {
         name: String::from("Anonymous"),
-        balance: 1200,
+        balance: rng.gen_range(1000, 1500),
         language: String::from("en"),
     })
 }

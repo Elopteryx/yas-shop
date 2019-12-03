@@ -14,21 +14,14 @@ const EventBus = {
     },
     unSubscribe(event: Symbol, subscriber: Subscriber) {
         const subscribers = subscriptions.get(event);
-        if (!subscribers) {
-            return;
-        }
-        subscribers.splice(subscribers.indexOf(subscriber), 1);
+        subscribers?.splice(subscribers?.indexOf(subscriber), 1);
     },
     hasSubscribers(event: Symbol) {
         const subscribers = subscriptions.get(event);
         return subscribers && subscribers.length > 0;
     },
     publish(event: Symbol, ...args: readonly any[]) {
-        const subscribers = subscriptions.get(event);
-        if (!subscribers) {
-            return;
-        }
-        subscribers.forEach(subscriber => subscriber(event, args));
+        subscriptions.get(event)?.forEach(subscriber => subscriber(event, args));
     }
 };
 

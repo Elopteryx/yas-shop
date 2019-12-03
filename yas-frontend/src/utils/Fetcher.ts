@@ -4,7 +4,7 @@ import Timeout from "./Timeout";
 const Fetcher = {
     GET<T>(url: string): Promise<T> {
         return Promise.race(
-            [Promise.all([fetch(url, {
+            [Promise.all<Response, unknown>([fetch(url, {
                 method: "GET",
                 mode: "cors",
                 cache: "no-cache",
@@ -19,7 +19,7 @@ const Fetcher = {
     },
     POST<T>(url: string, body: object): Promise<T> {
         return Promise.race(
-            [Promise.all([fetch(url, {
+            [Promise.all<Response, unknown>([fetch(url, {
                 method: "POST",
                 mode: "cors",
                 cache: "no-cache",
