@@ -1,49 +1,33 @@
-#![feature(proc_macro_hygiene, decl_macro)]
-
-#[macro_use]
-extern crate rocket;
-#[macro_use]
-extern crate rocket_contrib;
 #[macro_use]
 extern crate serde_derive;
 
-mod error;
-mod sorting;
-mod store;
 mod user;
 mod version;
+mod store;
+mod sorting;
 
-use crate::error::static_rocket_catch_info_for_internal_error;
-use crate::error::static_rocket_catch_info_for_not_found;
+use crate::user::user_current;
+use crate::version::version;
+use crate::store::{item_all, item_by_id};
+use crate::sorting::{sort_with_insertion, sort_with_merge, sort_with_quick};
 
-use crate::sorting::static_rocket_route_info_for_sort_with_insertion;
-use crate::sorting::static_rocket_route_info_for_sort_with_merge;
-use crate::sorting::static_rocket_route_info_for_sort_with_quick;
+use actix_web::{web, App, HttpRequest, HttpServer, Responder};
 
-use crate::store::static_rocket_route_info_for_item_all;
-use crate::store::static_rocket_route_info_for_item_by_id;
-
-use crate::user::static_rocket_route_info_for_user_current;
-
-use crate::version::static_rocket_route_info_for_version;
-
-fn rocket() -> rocket::Rocket {
-    rocket::ignite()
-        .mount(
-            "/app/v1",
-            routes![
-                user_current,
-                version,
-                item_all,
-                item_by_id,
-                sort_with_insertion,
-                sort_with_merge,
-                sort_with_quick
-            ],
-        )
-        .register(catchers![not_found, internal_error])
-}
-
-fn main() {
-    rocket().launch();
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new()
+            .route("/", web::get().to(greet))
+            .route("/user", web::get().to(user_current))
+            //.route("/delay", web::get().to(delay))
+            .route("/version", web::get().to(version))
+            .route("/store/items", web::get().to(item_all))
+            .route("/store/items/{id}", web::get().to(item_by_id))
+            .route("/sort/insertion", web::get().to(sort_with_insertion))
+            .route("/sort/merge", web::get().to(sort_with_merge))
+            .route("/sort/quick", web::get().to(sort_with_quick))
+    })
+    .bind("127.0.0.1:8000")?
+    .run()
+    .await
 }

@@ -1,14 +1,29 @@
-use rocket_contrib::json::JsonValue;
+use actix_http::ResponseBuilder;
+use actix_web::{error, http::header, http::StatusCode, HttpResponse};
+use failure::Fail;
 
-#[catch(404)]
-pub fn not_found() -> JsonValue {
-    json!({
-        "status": "error",
-        "reason": "Resource was not found."
-    })
+#[derive(Fail, Debug)]
+enum MyError {
+    #[fail(display = "internal error")]
+    InternalError,
+    #[fail(display = "bad request")]
+    BadClientData,
+    #[fail(display = "timeout")]
+    Timeout,
 }
 
-#[catch(500)]
-pub fn internal_error() -> &'static str {
-    "Whoops! Looks like we messed up."
+impl error::ResponseError for MyError {
+    fn error_response(&self) -> HttpResponse {
+        ResponseBuilder::new(self.status_code())
+            .set_header(header::CONTENT_TYPE, "text/html; charset=utf-8")
+            .body(self.to_string())
+    }
+
+    fn status_code(&self) -> StatusCode {
+        match *self {
+            MyError::InternalError => StatusCode::INTERNAL_SERVER_ERROR,
+            MyError::BadClientData => StatusCode::BAD_REQUEST,
+            MyError::Timeout => StatusCode::GATEWAY_TIMEOUT,
+        }
+    }
 }

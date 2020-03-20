@@ -15,7 +15,7 @@ struct OverLapStat {
 }
 
 fn get_overlap(first: &String, second: &String) -> OverLapStat {
-    let mut counter = if first.len() < second.len() {first.len()} else {second.len()}  as i32;
+    let mut counter = if first.len() < second.len() {first.len()} else {second.len()} as i32;
     if first.contains(second) || second.contains(first) {
         return OverLapStat { length: counter, order: OverLapOrder::Bigger }
     }

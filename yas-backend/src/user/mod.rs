@@ -1,8 +1,8 @@
 extern crate rand;
 
 use rand::Rng;
-
-use rocket_contrib::json::Json;
+use actix_web::web::Json;
+use actix_web::Responder;
 
 #[derive(Serialize, Deserialize)]
 pub struct User {
@@ -11,8 +11,7 @@ pub struct User {
     language: String,
 }
 
-#[get("/user/current")]
-pub fn user_current() -> Json<User> {
+pub async fn user_current() -> impl Responder {
     let mut rng = rand::thread_rng();
     Json(User {
         name: String::from("Anonymous"),
