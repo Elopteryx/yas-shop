@@ -1,29 +1,7 @@
-use actix_http::ResponseBuilder;
-use actix_web::{error, http::header, http::StatusCode, HttpResponse};
-use failure::Fail;
+use actix_web::{http, Result, HttpResponse};
 
-#[derive(Fail, Debug)]
-enum MyError {
-    #[fail(display = "internal error")]
-    InternalError,
-    #[fail(display = "bad request")]
-    BadClientData,
-    #[fail(display = "timeout")]
-    Timeout,
-}
-
-impl error::ResponseError for MyError {
-    fn error_response(&self) -> HttpResponse {
-        ResponseBuilder::new(self.status_code())
-            .set_header(header::CONTENT_TYPE, "text/html; charset=utf-8")
-            .body(self.to_string())
-    }
-
-    fn status_code(&self) -> StatusCode {
-        match *self {
-            MyError::InternalError => StatusCode::INTERNAL_SERVER_ERROR,
-            MyError::BadClientData => StatusCode::BAD_REQUEST,
-            MyError::Timeout => StatusCode::GATEWAY_TIMEOUT,
-        }
-    }
+pub async fn render_404() -> Result<HttpResponse> {
+    Ok(HttpResponse::build(http::StatusCode::NOT_FOUND)
+        .content_type("application/json; charset=utf-8")
+        .body("{\"error\":\"Resource not found.\"}"))
 }
