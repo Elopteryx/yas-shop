@@ -26,7 +26,7 @@ type AppState =
 };
 
 const App: React.FunctionComponent<AppState & HasLoading> = () => {
-  const [state, setState] = useState({isLoading: true} as AppState);
+  const [state, setState] = useState<AppState>({isLoading: true});
   useEffect(() => {
     Promise.all([
       Fetcher.GET<User>('/app/v1/user/current'),
