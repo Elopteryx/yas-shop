@@ -3,10 +3,10 @@ body {
 }
 
 .App {
+  margin: 10px;
   text-align: center;
-  background-color: #282c34;
   min-height: 100vh;
-  color: white;
+  color: #111111;
   overflow: hidden;
 }
 
@@ -16,15 +16,23 @@ body {
 }
 
 .App-header {
-  min-height: 20vh;
+  min-height: 10vh;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
+  box-shadow: 0 1px 0 rgba(12,13,14,0.15);
 }
 
 .App-header-left {
-  padding: 5vh;
+  padding-left: 10px;
+}
+
+.App-header-left-link {
+  color: #111111;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .App-header-right {
@@ -33,13 +41,14 @@ body {
 }
 
 .App-link {
-  color: #61dafb;
+  height: 100px;
+  line-height: 100px;
+  color: #111111;
   cursor: pointer;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .App-link-active {
-  color: #e9515e;
   cursor: pointer;
   text-decoration: underline;
 }
@@ -58,7 +67,9 @@ body {
 }
 
 .Content {
+  margin: 10px;
+  border: 0.05rem solid #111111;
   font-size: 3rem;
-  height: calc(80vh - 100px);
+  height: calc(80vh - 50px);
   line-height: calc(80vh - 100px);
 }

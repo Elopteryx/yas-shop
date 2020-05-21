@@ -1,20 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 import './App.css';
 import Clock from './common/Clock';
 import UserInfo from './common/UserInfo';
 import VersionDisplay from './common/VersionDisplay';
-import {HasLoading, withLoading} from './hoc/Loader';
+import {withLoading} from './hoc/Loader';
 import IndexPage from './common/IndexPage';
 import ItemPage from './common/ItemPage';
 import LocalizationContext, {Language} from './LocalizationContext';
-import LocalizedText from './l10n/LocalizedText';
 import Fetcher from "./utils/Fetcher";
 import BalanceDisplay from "./common/BalanceDisplay";
 import UserContext, {User} from "./UserContext";
 import VersionContext, {Version} from "./VersionContext";
+import {Immutable} from "./utils/Types";
+import AppTitle from "./AppTitle";
 
-type AppState =
+type AppState = Immutable<
   {
     isLoading: true,
   } |
@@ -23,13 +24,13 @@ type AppState =
     user: User;
     version: Version;
     language: Language;
-};
+}>;
 
-const App: React.FunctionComponent<AppState & HasLoading> = () => {
+const App: React.FunctionComponent<{}> = () => {
   const [state, setState] = useState<AppState>({isLoading: true});
   useEffect(() => {
     Promise.all([
-      Fetcher.GET<User>('/app/v1/user/current'),
+      Fetcher.GET<User>('/app/v1/user'),
       Fetcher.GET<Version>('/app/v1/version')
     ]).then(([user, version]) => {
       setState({isLoading: false, user, version, language: user.language});
@@ -48,9 +49,7 @@ const App: React.FunctionComponent<AppState & HasLoading> = () => {
             <Router>
               <div className="App">
                 <header className="App-header">
-                  <div className="App-header-left">
-                    <LocalizedText l10nKey="app.title"/>
-                  </div>
+                  <AppTitle/>
                   <div className="App-header-right">
                     <UserInfo/>
                     <VersionDisplay/>

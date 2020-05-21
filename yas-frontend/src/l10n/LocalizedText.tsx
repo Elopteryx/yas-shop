@@ -25,7 +25,7 @@ const LocalizedText: React.FunctionComponent<LocalizedProps> = (props) => {
     value = value || 'N/A';
 
     return (
-        <span>{value}</span>
+        <>{value}</>
     );
 };
 
