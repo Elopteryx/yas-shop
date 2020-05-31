@@ -2,6 +2,7 @@
 extern crate serde_derive;
 
 mod error;
+mod list;
 mod user;
 mod version;
 mod delay;
