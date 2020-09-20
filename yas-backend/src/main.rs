@@ -19,7 +19,7 @@ use crate::sorting::{sort_with_insertion, sort_with_merge, sort_with_quick};
 use actix_web::{web, guard, App, HttpServer, HttpResponse};
 use actix_web::web::scope;
 
-#[actix_rt::main]
+#[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()

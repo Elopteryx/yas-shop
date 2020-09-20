@@ -1,8 +1,8 @@
-import moment from 'moment';
+import format from 'date-fns/format'
 
 const Format = {
     currentTime() {
-        return moment().format('YYYY.MM.DD h:mm:ss a');
+        return format(new Date(), 'yyyy.MM.dd h:mm:ss a');
     }
 };
 
