@@ -13,7 +13,7 @@ use crate::error::render_404;
 use crate::user::user_current;
 use crate::version::version;
 use crate::delay::delay_by;
-use crate::store::{item_all, item_by_id};
+use crate::store::{item_all, item_by_id, prepare_database};
 use crate::sorting::{sort_with_insertion, sort_with_merge, sort_with_quick};
 
 use actix_web::{web, guard, App, HttpServer, HttpResponse};
@@ -21,6 +21,10 @@ use actix_web::web::scope;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    match prepare_database() {
+        Ok(_) => println!("Database initialized successfully!"),
+        Err(e) => panic!(e),
+    }
     HttpServer::new(|| {
         App::new()
             .service(

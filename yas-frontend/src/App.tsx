@@ -14,6 +14,7 @@ import UserContext, {User} from "./UserContext";
 import VersionContext, {Version} from "./VersionContext";
 import {Immutable} from "./utils/Types";
 import AppTitle from "./AppTitle";
+import SearchBar from "./search/SearchBar";
 
 type AppState = Immutable<
   {
@@ -50,6 +51,7 @@ const App: React.FunctionComponent<{}> = () => {
               <div className="App">
                 <header className="App-header">
                   <AppTitle/>
+                  <SearchBar/>
                   <div className="App-header-right">
                     <UserInfo/>
                     <VersionDisplay/>

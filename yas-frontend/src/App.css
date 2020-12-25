@@ -26,13 +26,27 @@ body {
 }
 
 .App-header-left {
+  width: 350px;
   padding-left: 10px;
+  text-align: left;
 }
 
 .App-header-left-link {
   color: #111111;
   cursor: pointer;
   text-decoration: none;
+}
+
+.App-search {
+  width: 500px;
+  height: 40px;
+}
+
+.App-search > input {
+  width: inherit;
+  height: inherit;
+  border-radius: 0.8rem;
+  outline: none;
 }
 
 .App-header-right {
